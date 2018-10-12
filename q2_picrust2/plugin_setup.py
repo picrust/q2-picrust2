@@ -28,7 +28,9 @@ plugin.methods.register_function(
             'seq': FeatureData[Sequence]},
              
     parameters={'threads': Int % Range(1, None),
-                'hsp_method': Str % Choices(HSP_METHODS)},
+                'hsp_method': Str % Choices(HSP_METHODS),
+                'max_nsti': Int % Range(0, None)}
+
     outputs=[
        ('ko_metagenome', FeatureTable[Frequency]),
        ('ec_metagenome', FeatureTable[Frequency]),
@@ -44,8 +46,9 @@ plugin.methods.register_function(
 
     parameter_descriptions={
         'threads': 'Number of threads/processes to use during workflow.',
-        'hsp_method': 'Which hidden-state prediction method to use.'
-    },
+        'hsp_method': 'Which hidden-state prediction method to use.',
+        'max_nsti': ('Max nearest-sequenced taxon index for an input ASV to '
+                     'be output.')},
 
     output_descriptions={'ko_metagenome': 'Predicted metagenome for KEGG orthologs',
                          'ec_metagenome': 'Predicted metagenome for E.C. numbers',

@@ -12,7 +12,8 @@ from picrust2.default import (default_fasta, default_tree, default_hmm,
 def full_pipeline(table: biom.Table,
                   seq : pd.Series,
                   threads: int = 1,
-                  hsp_method: str = "mp")  -> (biom.Table,
+                  hsp_method: str = "mp",
+                  max_nsti: int = 2)  -> (biom.Table,
                                                biom.Table,
                                                biom.Table,
                                                biom.Table):
@@ -51,7 +52,7 @@ def full_pipeline(table: biom.Table,
                                                                         no_regroup=False,
                                                                         stratified=False,
                                                                         alignment_tool="hmmalign",
-                                                                        max_nsti=2,
+                                                                        max_nsti=max_nsti,
                                                                         min_reads=1,
                                                                         min_samples=1,
                                                                         hsp_method=hsp_method,
@@ -63,7 +64,7 @@ def full_pipeline(table: biom.Table,
                                                                         no_descrip=True,
                                                                         verbose=False)
 
-        Convert the returned unstratified tables to biom tables.
+        # Convert the returned unstratified tables to biom tables.
         ko_biom = biom.load_table(func_outputs["KO"])
         ec_biom = biom.load_table(func_outputs["EC"])
         pathabun_biom = biom.load_table(pathway_outputs["unstrat_abun"])
