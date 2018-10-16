@@ -4,6 +4,8 @@ from os import path
 import pandas as pd
 from tempfile import TemporaryDirectory
 from q2_types.feature_table import FeatureTable, Frequency
+import subprocess
+import sys
 import picrust2.pipeline
 from picrust2.default import (default_fasta, default_tree, default_hmm,
                               default_tables, default_map, default_regroup_map,
@@ -17,6 +19,29 @@ def full_pipeline(table: biom.Table,
                                                biom.Table,
                                                biom.Table,
                                                biom.Table):
+
+    # Check whether EPA-NG and GAPPA are installed. Exit with explanation if
+    # not.
+    missing_prog = []
+    try:
+        subprocess.check_call(['epa-ng', '--help'])
+    except OSError:
+        missing_prog.append("epa-ng")
+
+    try:
+        subprocess.check_call(['gappa', '--help'])
+    except OSError:
+        missing_prog.append("gappa")
+
+    if len(missing_prog) > 0:
+        sys.exit("Missing the following tools from your $PATH variable: " +
+                 " and ".join(missing_prog) + ". Note that this QIIME2 " +
+                 "command is for running the default PICRUSt2 pipeline, " +
+                 "which includes steps for running sequence placement with " +
+                 "EPA-NG. If you do not want to install the missing programs " +
+                 "you can run sequence placement with q2-fragment-insertion " +
+                 "and input this tree to the \"qiime picrust2 " +
+                 "custom_tree_pipeline\" command")
 
     # Need to write out BIOM table and fasta to be used in pipeline.
     with TemporaryDirectory() as temp_dir:

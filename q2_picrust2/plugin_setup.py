@@ -4,6 +4,7 @@ from qiime2.plugin import (Plugin, Str, Properties, Choices, Int, Bool, Range,
 from q2_types.feature_table import FeatureTable, Frequency
 from q2_types.feature_data import FeatureData, Sequence
 from q2_types.sample_data import SampleData
+from q2_types.tree import Phylogeny, Rooted
 import q2_picrust2
 
 citations = Citations.load('citations.bib', package='q2_picrust2')
@@ -61,3 +62,48 @@ plugin.methods.register_function(
 
     citations=[citations['Langille2013NatureBioTech']]
 )
+
+
+plugin.methods.register_function(
+    function=q2_picrust2.custom_tree_pipeline,
+
+    inputs={'table': FeatureTable[Frequency],
+            'tree': Phylogeny[Rooted]},
+             
+    parameters={'threads': Int % Range(1, None),
+                'hsp_method': Str % Choices(HSP_METHODS),
+                'max_nsti': Int % Range(0, None)},
+
+    outputs=[
+       ('ko_metagenome', FeatureTable[Frequency]),
+       ('ec_metagenome', FeatureTable[Frequency]),
+       ('pathway_abundance', FeatureTable[Frequency]),
+       ('pathway_coverage', FeatureTable[Frequency])
+    ],
+
+    input_descriptions={
+        'table': ('The feature table containing sequence abundances per sample.'),
+        'tree': ('Tree of study ASVs placed into reference phylgeney.')
+    },
+
+    parameter_descriptions={
+        'threads': 'Number of threads/processes to use during workflow.',
+        'hsp_method': 'Which hidden-state prediction method to use.',
+        'max_nsti': ('Max nearest-sequenced taxon index for an input ASV to '
+                     'be output.')},
+
+    output_descriptions={'ko_metagenome': 'Predicted metagenome for KEGG orthologs',
+                         'ec_metagenome': 'Predicted metagenome for E.C. numbers',
+                         'pathway_abundance': 'Predicted MetaCyc pathway abundances',
+                         'pathway_coverage': 'Predicted MetaCyc pathway coverages'},
+
+    name='16S PICRUSt2 pipeline with custom tree',
+
+    description=("QIIME2 plugin for running PICRUSt2 pipeline based on a " +
+                 "tree from a different pipeline. This was written to be " +
+                 "used with the output of SEPP (q2-fragment-insertion) as a " +
+                 "starting point."),
+
+    citations=[citations['Langille2013NatureBioTech']]
+)
+
