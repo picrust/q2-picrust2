@@ -11,10 +11,10 @@ def custom_tree_pipeline(table: biom.Table,
                          tree: skbio.TreeNode,
                          threads: int = 1,
                          hsp_method: str = "mp",
-                         max_nsti: int = 2)  -> (biom.Table,
-                                                 biom.Table,
-                                                 biom.Table,
-                                                 biom.Table):
+                         max_nsti: float = 2.0)  -> (biom.Table,
+                                                     biom.Table,
+                                                     biom.Table,
+                                                     biom.Table):
 
     # Run pipeline in temporary directory so that files are not saved locally.
     with TemporaryDirectory() as temp_dir:
@@ -52,12 +52,14 @@ def custom_tree_pipeline(table: biom.Table,
         EC_metagenome_out = path.join(picrust2_out, "EC_metagenome_out")
         system_call_check("metagenome_pipeline.py -i " + biom_infile + " -m " +
                           hsp_out_16S + ".tsv -f " + hsp_out_EC + ".tsv -p " +
-                          str(threads) + " -o " + EC_metagenome_out)
+                          str(threads) + " -o " + EC_metagenome_out +
+                          " --max_nsti " + str(max_nsti))
 
         KO_metagenome_out = path.join(picrust2_out, "KO_metagenome_out")
         system_call_check("metagenome_pipeline.py -i " + biom_infile + " -m " +
                           hsp_out_16S + ".tsv -f " + hsp_out_KO + ".tsv -p " +
-                          str(threads) + " -o " + KO_metagenome_out)
+                          str(threads) + " -o " + KO_metagenome_out +
+                          " --max_nsti " + str(max_nsti))
 
         # Run pathway inference step.
         pathways_out = path.join(picrust2_out, "pathways_out")

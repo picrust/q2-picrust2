@@ -15,7 +15,7 @@ def full_pipeline(table: biom.Table,
                   seq : pd.Series,
                   threads: int = 1,
                   hsp_method: str = "mp",
-                  max_nsti: int = 2)  -> (biom.Table,
+                  max_nsti: float = 2.0)  -> (biom.Table,
                                                biom.Table,
                                                biom.Table,
                                                biom.Table):

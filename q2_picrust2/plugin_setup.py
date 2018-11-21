@@ -30,7 +30,7 @@ plugin.methods.register_function(
              
     parameters={'threads': Int % Range(1, None),
                 'hsp_method': Str % Choices(HSP_METHODS),
-                'max_nsti': Int % Range(0, None)},
+                'max_nsti': Float % Range(0.0, None)},
 
     outputs=[
        ('ko_metagenome', FeatureTable[Frequency]),
@@ -72,7 +72,7 @@ plugin.methods.register_function(
              
     parameters={'threads': Int % Range(1, None),
                 'hsp_method': Str % Choices(HSP_METHODS),
-                'max_nsti': Int % Range(0, None)},
+                'max_nsti': Float % Range(0.0, None)},
 
     outputs=[
        ('ko_metagenome', FeatureTable[Frequency]),
