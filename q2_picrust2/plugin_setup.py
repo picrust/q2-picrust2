@@ -83,7 +83,7 @@ plugin.methods.register_function(
 
     input_descriptions={
         'table': ('The feature table containing sequence abundances per sample.'),
-        'tree': ('Tree of study ASVs placed into reference phylgeney.')
+        'tree': ('Tree of study ASVs placed into reference phylogeny.')
     },
 
     parameter_descriptions={
