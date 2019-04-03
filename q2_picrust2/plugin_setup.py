@@ -13,7 +13,7 @@ HSP_METHODS = ['mp', 'emp_prob', 'pic', 'scp', 'subtree_average']
 
 plugin = Plugin(
     name='picrust2',
-    version="0.0.0",
+    version="0.0.3",
     website='https://github.com/gavinmdouglas/q2-picrust2',
     package='q2_picrust2',
     description=('This QIIME 2 plugin wraps the default 16S PICRUSt2 pipeline to run '
@@ -32,12 +32,9 @@ plugin.methods.register_function(
                 'hsp_method': Str % Choices(HSP_METHODS),
                 'max_nsti': Float % Range(0.0, None)},
 
-    outputs=[
-       ('ko_metagenome', FeatureTable[Frequency]),
-       ('ec_metagenome', FeatureTable[Frequency]),
-       ('pathway_abundance', FeatureTable[Frequency]),
-       ('pathway_coverage', FeatureTable[Frequency])
-    ],
+    outputs=[('ko_metagenome', FeatureTable[Frequency]),
+             ('ec_metagenome', FeatureTable[Frequency]),
+             ('pathway_abundance', FeatureTable[Frequency])],
 
     input_descriptions={
         'table': ('The feature table containing sequence abundances per sample.'),
@@ -53,8 +50,7 @@ plugin.methods.register_function(
 
     output_descriptions={'ko_metagenome': 'Predicted metagenome for KEGG orthologs',
                          'ec_metagenome': 'Predicted metagenome for E.C. numbers',
-                         'pathway_abundance': 'Predicted MetaCyc pathway abundances',
-                         'pathway_coverage': 'Predicted MetaCyc pathway coverages'},
+                         'pathway_abundance': 'Predicted MetaCyc pathway abundances'},
 
     name='Default 16S PICRUSt2 Pipeline',
 
@@ -77,8 +73,7 @@ plugin.methods.register_function(
     outputs=[
        ('ko_metagenome', FeatureTable[Frequency]),
        ('ec_metagenome', FeatureTable[Frequency]),
-       ('pathway_abundance', FeatureTable[Frequency]),
-       ('pathway_coverage', FeatureTable[Frequency])
+       ('pathway_abundance', FeatureTable[Frequency])
     ],
 
     input_descriptions={
@@ -94,8 +89,7 @@ plugin.methods.register_function(
 
     output_descriptions={'ko_metagenome': 'Predicted metagenome for KEGG orthologs',
                          'ec_metagenome': 'Predicted metagenome for E.C. numbers',
-                         'pathway_abundance': 'Predicted MetaCyc pathway abundances',
-                         'pathway_coverage': 'Predicted MetaCyc pathway coverages'},
+                         'pathway_abundance': 'Predicted MetaCyc pathway abundances'},
 
     name='16S PICRUSt2 pipeline with custom tree',
 
