@@ -1,1 +1,3 @@
 testfiles/*
+q2_picrust2.egg-info/
+q2_picrust2/__pycache__/
