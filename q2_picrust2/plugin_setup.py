@@ -13,7 +13,7 @@ HSP_METHODS = ['mp', 'emp_prob', 'pic', 'scp', 'subtree_average']
 
 plugin = Plugin(
     name='picrust2',
-    version="0.0.3",
+    version="0.0.4",
     website='https://github.com/gavinmdouglas/q2-picrust2',
     package='q2_picrust2',
     description=('This QIIME 2 plugin wraps the default 16S PICRUSt2 pipeline to run '
