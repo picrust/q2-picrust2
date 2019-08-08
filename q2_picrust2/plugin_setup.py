@@ -13,13 +13,14 @@ HSP_METHODS = ['mp', 'emp_prob', 'pic', 'scp', 'subtree_average']
 
 plugin = Plugin(
     name='picrust2',
-    version="2019.4",
+    version="2019.7",
     website='https://github.com/gavinmdouglas/q2-picrust2',
     package='q2_picrust2',
     description=('This QIIME 2 plugin wraps the default 16S PICRUSt2 pipeline to run '
                  'metagenome inference based on marker gene data. Currently '
                  'only unstratified output is supported.'),
     short_description='Predicts gene families and pathways from 16S sequences.',
+    citations=[citations['Douglas2019bioRxiv']]
 )
 
 plugin.methods.register_function(
@@ -49,14 +50,14 @@ plugin.methods.register_function(
                      'be output.')},
 
     output_descriptions={'ko_metagenome': 'Predicted metagenome for KEGG orthologs',
-                         'ec_metagenome': 'Predicted metagenome for E.C. numbers',
+                         'ec_metagenome': 'Predicted metagenome for EC numbers',
                          'pathway_abundance': 'Predicted MetaCyc pathway abundances'},
 
     name='Default 16S PICRUSt2 Pipeline',
 
     description=("QIIME2 Plugin for default 16S PICRUSt2 pipeline"),
 
-    citations=[citations['Langille2013NatureBioTech']]
+    citations=[citations['Douglas2019bioRxiv']]
 )
 
 
@@ -98,6 +99,6 @@ plugin.methods.register_function(
                  "used with the output of SEPP (q2-fragment-insertion) as a " +
                  "starting point."),
 
-    citations=[citations['Langille2013NatureBioTech']]
+    citations=[citations['Douglas2019bioRxiv']]
 )
 
