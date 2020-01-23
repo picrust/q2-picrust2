@@ -1,31 +1,34 @@
-import qiime2
 import biom
 from os import path
+import sys
 import pandas as pd
 from tempfile import TemporaryDirectory
-from q2_types.feature_table import FeatureTable, Frequency
-import subprocess
-import sys
 import picrust2.pipeline
-from picrust2.default import (default_ref_dir, default_tables, default_map,
+from picrust2.default import (default_ref_dir, default_tables,
                               default_regroup_map, default_pathway_map)
+
 
 def full_pipeline(table: biom.Table,
                   seq: pd.Series,
                   threads: int = 1,
                   hsp_method: str = "mp",
-                  max_nsti: float = 2.0) -> (biom.Table,
-                                             biom.Table,
-                                             biom.Table):
+                  min_align: float = 0.8,
+                  max_nsti: float = 2.0,
+                  skip_minpath: bool = False,
+                  no_gap_fill: bool = False,
+                  skip_norm: bool = False,
+                  highly_verbose: bool = False) -> (biom.Table,
+                                                    biom.Table,
+                                                    biom.Table):
 
     # Write out BIOM table and FASTA to be used in pipeline.
     with TemporaryDirectory() as temp_dir:
 
         # Write out BIOM table:
         biom_infile = path.join(temp_dir, "intable.biom")
-        with biom.util.biom_open(biom_infile, 'w') as out_biom:  
+        with biom.util.biom_open(biom_infile, 'w') as out_biom:
             table.to_hdf5(h5grp=out_biom,
-                          generated_by="PICRUSt2 QIIME2 Plugin")
+                          generated_by="PICRUSt2 QIIME 2 Plugin")
 
         # Write out Pandas series as FASTA:
         seq_outfile = path.join(temp_dir, "seqs.fna")
@@ -55,15 +58,16 @@ def full_pipeline(table: biom.Table,
                                                                         min_reads=1,
                                                                         min_samples=1,
                                                                         hsp_method=hsp_method,
+                                                                        min_align=min_align,
                                                                         skip_nsti=False,
-                                                                        skip_minpath=False,
-                                                                        no_gap_fill=False,
+                                                                        skip_minpath=skip_minpath,
+                                                                        no_gap_fill=no_gap_fill,
                                                                         coverage=False,
                                                                         per_sequence_contrib=False,
                                                                         wide_table=False,
-                                                                        skip_norm=False,
+                                                                        skip_norm=skip_norm,
                                                                         remove_intermediate=False,
-                                                                        verbose=True)
+                                                                        verbose=highly_verbose)
 
         # Convert the returned unstratified tables to BIOM tables.
         # Note that the 0-index in the func table returned objects corresponds
