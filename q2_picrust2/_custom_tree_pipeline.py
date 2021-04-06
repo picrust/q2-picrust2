@@ -11,6 +11,7 @@ def custom_tree_pipeline(table: biom.Table,
                          threads: int = 1,
                          hsp_method: str = "mp",
                          max_nsti: float = 2.0,
+                         edge_exponent: float = 0.5,
                          skip_minpath: bool = False,
                          no_gap_fill: bool = False,
                          skip_norm: bool = False,
@@ -45,7 +46,8 @@ def custom_tree_pipeline(table: biom.Table,
                           " -p 1 " + \
                           " -n " + \
                           " -o " + hsp_out_16S + \
-                          " -m " + hsp_method
+                          " -m " + hsp_method + \
+                          " -e " + str(edge_exponent)
 
         hsp_out_EC = path.join(picrust2_out, "EC_predicted.tsv.gz")
         hsp_out_EC_cmd = "hsp.py -i EC " + \
@@ -53,7 +55,8 @@ def custom_tree_pipeline(table: biom.Table,
                           " -p " + str(threads) + \
                           " -n " + \
                           " -o " + hsp_out_EC + \
-                          " -m " + hsp_method
+                          " -m " + hsp_method + \
+                          " -e " + str(edge_exponent)
 
         hsp_out_KO = path.join(picrust2_out, "KO_predicted.tsv.gz")
         hsp_out_KO_cmd = "hsp.py -i KO " + \
@@ -61,7 +64,8 @@ def custom_tree_pipeline(table: biom.Table,
                           " -p " + str(threads) + \
                           " -n " + \
                           " -o " + hsp_out_KO + \
-                          " -m " + hsp_method
+                          " -m " + hsp_method + \
+                          " -e " + str(edge_exponent)
 
         if highly_verbose:
             hsp_out_16S_cmd += " --verbose"

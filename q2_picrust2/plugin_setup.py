@@ -9,6 +9,8 @@ citations = Citations.load('citations.bib', package='q2_picrust2')
 
 HSP_METHODS = ['mp', 'emp_prob', 'pic', 'scp', 'subtree_average']
 
+PLACEMENT_TOOLS = ['epa-ng', 'sepp']
+
 plugin = Plugin(
     name='picrust2',
     version="2021.2",
@@ -29,8 +31,10 @@ plugin.methods.register_function(
 
     parameters={'threads': Int % Range(1, None),
                 'hsp_method': Str % Choices(HSP_METHODS),
+                'placement_tool': Str % Choices(PLACEMENT_TOOLS),
                 'min_align': Float % Range(0.0, 1.0),
                 'max_nsti': Float % Range(0.0, None),
+                'edge_exponent': Float % Range(0.0, None),
                 'skip_minpath': Bool,
                 'no_gap_fill': Bool,
                 'skip_norm': Bool,
@@ -49,6 +53,9 @@ plugin.methods.register_function(
     parameter_descriptions={
         'threads': 'Number of threads/processes to use during workflow.',
         'hsp_method': 'Which hidden-state prediction method to use.',
+        'placement_tool': ('Placement tool to use when placing sequences into '
+                           'reference tree. EPA-ng is the default, but SEPP '
+                           'is less memory intensive.'),
         'min_align': ('Proportion of the total length of an input query '
                       'sequence that must align with reference sequences. '
                       'Any sequences with lengths below this value after '
@@ -59,6 +66,11 @@ plugin.methods.register_function(
                      'be output.'),
         'skip_minpath': ('Do not run MinPath to identify which pathways are '
                          'present as a first pass (on by default).'),
+        'edge_exponent': ('Setting for maximum parisomony hidden-state '
+                         'prediction. Specifies weighting transition costs '
+                         'by the inverse length of edge lengths. If 0, then '
+                         'edge lengths do not influence predictions. Must be '
+                         'a non-negative real-valued number.'),
         'no_gap_fill': ('Do not perform gap filling before predicting '
                         'pathway abundances (gap filling is on otherwise by '
                         'default).'),
@@ -96,6 +108,7 @@ plugin.methods.register_function(
     parameters={'threads': Int % Range(1, None),
                 'hsp_method': Str % Choices(HSP_METHODS),
                 'max_nsti': Float % Range(0.0, None),
+                'edge_exponent': Float % Range(0.0, None),
                 'skip_minpath': Bool,
                 'no_gap_fill': Bool,
                 'skip_norm': Bool,
@@ -119,6 +132,11 @@ plugin.methods.register_function(
                      'be output.'),
         'skip_minpath': ('Do not run MinPath to identify which pathways are '
                          'present as a first pass (on by default).'),
+        'edge_exponent': ('Setting for maximum parisomony hidden-state '
+                         'prediction. Specifies weighting transition costs '
+                         'by the inverse length of edge lengths. If 0, then '
+                         'edge lengths do not influence predictions. Must be '
+                         'a non-negative real-valued number.'),
         'no_gap_fill': ('Do not perform gap filling before predicting '
                         'pathway abundances (gap filling is on otherwise by '
                         'default).'),
