@@ -95,13 +95,11 @@ def custom_tree_pipeline(table: biom.Table,
 
         EC_metagenome_cmd = "metagenome_pipeline.py -i " + biom_infile + \
                             " -f " + hsp_out_EC + \
-                            " -p " + str(threads) + \
                             " -o " + EC_metagenome_out + \
                             " --max_nsti " + str(max_nsti)
 
         KO_metagenome_cmd = "metagenome_pipeline.py -i " + biom_infile + \
                             " -f " + hsp_out_KO + \
-                            " -p " + str(threads) + \
                             " -o " + KO_metagenome_out + \
                             " --max_nsti " + str(max_nsti)
 
