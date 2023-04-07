@@ -35,7 +35,7 @@ def full_pipeline(table: biom.Table,
         seq_outfile = path.join(temp_dir, "seqs.fna")
 
         with open(seq_outfile, "w") as outfile_fh:
-            for seqname, sequence in seq.iteritems():
+            for seqname, sequence in seq.items():
                 print(">" + str(seqname) + "\n" + str(sequence),
                       file=outfile_fh)
 
