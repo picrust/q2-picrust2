@@ -78,7 +78,6 @@ def custom_tree_pipeline(table: biom.Table,
                               print_stdout=highly_verbose,
                               print_stderr=True)
 
-
         system_call_check(hsp_out_EC_cmd,
                           print_command=True,
                           print_stdout=highly_verbose,

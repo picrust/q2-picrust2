@@ -1,6 +1,5 @@
 import biom
 from os import path
-import sys
 import pandas as pd
 from tempfile import TemporaryDirectory
 import picrust2.pipeline
