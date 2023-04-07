@@ -13,7 +13,7 @@ PLACEMENT_TOOLS = ['epa-ng', 'sepp']
 
 plugin = Plugin(
     name='picrust2',
-    version="2021.11",
+    version="2023.2",
     website='https://github.com/gavinmdouglas/q2-picrust2',
     package='q2_picrust2',
     description=('This QIIME 2 plugin wraps the default 16S PICRUSt2 pipeline to run '
@@ -67,10 +67,10 @@ plugin.methods.register_function(
         'skip_minpath': ('Do not run MinPath to identify which pathways are '
                          'present as a first pass (on by default).'),
         'edge_exponent': ('Setting for maximum parisomony hidden-state '
-                         'prediction. Specifies weighting transition costs '
-                         'by the inverse length of edge lengths. If 0, then '
-                         'edge lengths do not influence predictions. Must be '
-                         'a non-negative real-valued number.'),
+                          'prediction. Specifies weighting transition costs '
+                          'by the inverse length of edge lengths. If 0, then '
+                          'edge lengths do not influence predictions. Must be '
+                          'a non-negative real-valued number.'),
         'no_gap_fill': ('Do not perform gap filling before predicting '
                         'pathway abundances (gap filling is on otherwise by '
                         'default).'),
@@ -133,10 +133,10 @@ plugin.methods.register_function(
         'skip_minpath': ('Do not run MinPath to identify which pathways are '
                          'present as a first pass (on by default).'),
         'edge_exponent': ('Setting for maximum parisomony hidden-state '
-                         'prediction. Specifies weighting transition costs '
-                         'by the inverse length of edge lengths. If 0, then '
-                         'edge lengths do not influence predictions. Must be '
-                         'a non-negative real-valued number.'),
+                          'prediction. Specifies weighting transition costs '
+                          'by the inverse length of edge lengths. If 0, then '
+                          'edge lengths do not influence predictions. Must be '
+                          'a non-negative real-valued number.'),
         'no_gap_fill': ('Do not perform gap filling before predicting '
                         'pathway abundances (gap filling is on otherwise by '
                         'default).'),
