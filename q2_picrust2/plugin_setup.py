@@ -13,7 +13,7 @@ PLACEMENT_TOOLS = ['epa-ng', 'sepp']
 
 plugin = Plugin(
     name='picrust2',
-    version="2023.2",
+    version="2024.5",
     website='https://github.com/gavinmdouglas/q2-picrust2',
     package='q2_picrust2',
     description=('This QIIME 2 plugin wraps the default 16S PICRUSt2 pipeline to run '

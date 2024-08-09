@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="q2-picrust2",
-    version="2023.2",
+    version="2024.5",
     packages=find_packages(),
     package_data={'q2_picrust2': ['citations.bib']},
     author="Gavin Douglas",
