@@ -1,10 +1,10 @@
 channels:
-- https://packages.qiime2.org/qiime2/2024.5/amplicon/released
+- https://packages.qiime2.org/qiime2/2026.7/qiime2/released/
 - conda-forge
 - bioconda
 dependencies:
   - qiime2-amplicon
-  - picrust2=2.5.3
+  - picrust2=2.6.4
   - pip
   - pip:
     - q2-picrust2@git+https://github.com/picrust/q2-picrust2.git@master

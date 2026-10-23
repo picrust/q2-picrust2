@@ -13,14 +13,14 @@ PLACEMENT_TOOLS = ['epa-ng', 'sepp']
 
 plugin = Plugin(
     name='picrust2',
-    version="2024.5",
-    website='https://github.com/gavinmdouglas/q2-picrust2',
+    version="2026.7",
+    website='https://github.com/picrust/q2-picrust2',
     package='q2_picrust2',
     description=('This QIIME 2 plugin wraps the default 16S PICRUSt2 pipeline to run '
                  'metagenome inference based on marker gene data. Currently '
                  'only unstratified output is supported.'),
     short_description='Predicts gene families and pathways from 16S sequences.',
-    citations=[citations['Douglas2020NatureBiotech']]
+    citations=[citations['Douglas2020NatureBiotech'],citations['Wright2025Bioinformatics']]
 )
 
 plugin.methods.register_function(
@@ -34,6 +34,7 @@ plugin.methods.register_function(
                 'placement_tool': Str % Choices(PLACEMENT_TOOLS),
                 'min_align': Float % Range(0.0, 1.0),
                 'max_nsti': Float % Range(0.0, None),
+                'chunk_size': Int % Range(1, None),
                 'edge_exponent': Float % Range(0.0, None),
                 'skip_minpath': Bool,
                 'no_gap_fill': Bool,
@@ -42,8 +43,10 @@ plugin.methods.register_function(
 
     outputs=[('ko_metagenome', FeatureTable[Frequency]),
              ('ec_metagenome', FeatureTable[Frequency]),
-             ('pathway_abundance', FeatureTable[Frequency])],
-
+             ('pathway_abundance', FeatureTable[Frequency]),
+             ('bacteria_tree', Phylogeny[Rooted]),
+             ('archaea_tree', Phylogeny[Rooted])],
+        
     input_descriptions={
         'table': ('The feature table containing sequence abundances per sample.'),
         'seq': ('Sequences (e.g. ASVs or representative OTUs) corresponding to '
@@ -62,6 +65,8 @@ plugin.methods.register_function(
                       'making an alignment with reference sequences will '
                       'be excluded from the placement and all subsequent '
                       'steps.'),
+        'chunk_size': ('Number of query sequences to read in at once during '
+                         'EPA-ng placement. Lower values reduce memory usage.'),
         'max_nsti': ('Max nearest-sequenced taxon index for an input ASV to '
                      'be output.'),
         'skip_minpath': ('Do not run MinPath to identify which pathways are '
@@ -89,7 +94,9 @@ plugin.methods.register_function(
 
     output_descriptions={'ko_metagenome': 'Predicted metagenome for KEGG orthologs',
                          'ec_metagenome': 'Predicted metagenome for EC numbers',
-                         'pathway_abundance': 'Predicted MetaCyc pathway abundances'},
+                         'pathway_abundance': 'Predicted MetaCyc pathway abundances',
+                         'bacteria_tree': 'Bacterial GTDB reference tree with bacterial study sequences inserted into it',
+                         'archaea_tree': 'Archaeal GTDB reference tree with archaeal study sequences inserted into it'},
 
     name='Default 16S PICRUSt2 Pipeline',
 
