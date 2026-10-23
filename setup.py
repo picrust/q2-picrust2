@@ -2,11 +2,11 @@ from setuptools import setup, find_packages
 
 setup(
     name="q2-picrust2",
-    version="2024.5",
+    version="2026.7",
     packages=find_packages(),
     package_data={'q2_picrust2': ['citations.bib']},
-    author="Gavin Douglas",
-    author_email="gavinmdouglas@gmail.com",
+    author="Gavin Douglas & Robyn Wright",
+    author_email="robyn.wright@dal.ca",
     description="Metagenome inference based on marker gene data.",
     license='GPL3',
     url="https://github.com/picrust/picrust2",
