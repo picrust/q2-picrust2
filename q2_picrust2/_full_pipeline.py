@@ -87,5 +87,6 @@ def full_pipeline(table: biom.Table,
         pathabun_biom = biom.load_table(pathway_outputs["unstrat_abun"])
         bac_tree = skbio.TreeNode.read(path.join(picrust2_out, "bac_reduced.tre"))
         arc_tree = skbio.TreeNode.read(path.join(picrust2_out, "arc_reduced.tre"))
+        combined_nsti = pd.read_csv(path.join(picrust2_out, "combined_marker_predicted_and_nsti.tsv.gz"), sep="\t", index_col="sequence")
 
-        return ko_biom, ec_biom, pathabun_biom, bac_tree, arc_tree
+        return ko_biom, ec_biom, pathabun_biom, bac_tree, arc_tree, combined_nsti
