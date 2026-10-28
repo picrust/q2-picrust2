@@ -2,6 +2,7 @@ from qiime2.plugin import (Plugin, Str, Choices, Int, Bool, Range, Float,
                            Citations)
 from q2_types.feature_table import FeatureTable, Frequency
 from q2_types.feature_data import FeatureData, Sequence
+from q2_types.metadata import ImmutableMetadata
 from q2_types.tree import Phylogeny, Rooted
 import q2_picrust2
 
@@ -45,7 +46,8 @@ plugin.methods.register_function(
              ('ec_metagenome', FeatureTable[Frequency]),
              ('pathway_abundance', FeatureTable[Frequency]),
              ('bacteria_tree', Phylogeny[Rooted]),
-             ('archaea_tree', Phylogeny[Rooted])],
+             ('archaea_tree', Phylogeny[Rooted]),
+             ('combined_nsti', ImmutableMetadata)],
         
     input_descriptions={
         'table': ('The feature table containing sequence abundances per sample.'),
@@ -96,7 +98,8 @@ plugin.methods.register_function(
                          'ec_metagenome': 'Predicted metagenome for EC numbers',
                          'pathway_abundance': 'Predicted MetaCyc pathway abundances',
                          'bacteria_tree': 'Bacterial GTDB reference tree with bacterial study sequences inserted into it',
-                         'archaea_tree': 'Archaeal GTDB reference tree with archaeal study sequences inserted into it'},
+                         'archaea_tree': 'Archaeal GTDB reference tree with archaeal study sequences inserted into it',
+                         'combined_nsti': 'Information on which tree each of your ASVs was placed into, the predicted 16S copy number, the closest genome in the PICRUSt2 database and the NSTI (nearest sequenced taxon index) for that genome.'},
 
     name='Default 16S PICRUSt2 Pipeline',
 
