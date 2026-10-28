@@ -2,6 +2,7 @@ import biom
 from os import path
 import pandas as pd
 import skbio
+import qiime2
 from tempfile import TemporaryDirectory
 import picrust2.pipeline
 from picrust2.default import (default_ref_dir_bac, default_ref_dir_arc,
@@ -24,7 +25,8 @@ def full_pipeline(table: biom.Table,
                                                     biom.Table,
                                                     biom.Table,
                                                     skbio.TreeNode,
-                                                    skbio.TreeNode):
+                                                    skbio.TreeNode,
+                                                    qiime2.Metadata):
 
     # Write out BIOM table and FASTA to be used in pipeline.
     with TemporaryDirectory() as temp_dir:
@@ -88,5 +90,6 @@ def full_pipeline(table: biom.Table,
         bac_tree = skbio.TreeNode.read(path.join(picrust2_out, "bac_reduced.tre"))
         arc_tree = skbio.TreeNode.read(path.join(picrust2_out, "arc_reduced.tre"))
         combined_nsti = pd.read_csv(path.join(picrust2_out, "combined_marker_predicted_and_nsti.tsv.gz"), sep="\t", index_col="sequence")
+        combined_nsti.index.name = "feature-id"
 
-        return ko_biom, ec_biom, pathabun_biom, bac_tree, arc_tree, combined_nsti
+        return ko_biom, ec_biom, pathabun_biom, bac_tree, arc_tree, qiime2.Metadata(combined_nsti)
